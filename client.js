@@ -40,7 +40,7 @@ const main = async () => {
         await createUser(username);
 
         const chatManager = new ChatManager({
-            instanceLocator: 'v1:us1:a795d3e9-45d4-426c-87e1-2036110af5f7',
+            instanceLocator: 'YOUR INSTANCE LOCATOR',
             tokenProvider: new TokenProvider({
                 url: 'http://localhost:3001/authenticate'
             }),
