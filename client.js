@@ -65,7 +65,27 @@ const main = async () => {
         const { chosenRoom } = await get(roomSchema);
         const room = availableRooms[chosenRoom];
 
+        await currentUser.subscribeToRoom({
+            roomId: room.id,
+            hooks: {
+                onMessage: message => {
+                    if(username != message.sender.name)
+                        console.log(`${message.senderId} - ${message.text}`);
+                }
+            },
+            messageLimit: 0
+        });
 
+        const input = readline.createInterface({
+            input: process.stdin
+        });
+
+        input.on('line', async text => {
+            await currentUser.sendMessage({
+                roomId: room.id,
+                text
+            });
+        });
     }
     catch(err) {
         console.error(err);
