@@ -3,6 +3,7 @@ const prompt = require('prompt');
 const axios = require('axios');
 const { ChatManager, TokenProvider } = require('@pusher/chatkit-client');
 const { JSDOM } = require('jsdom');
+const readline = require('readline');
 
 const makeChatkitNodeCompatible = () => {
     const { window } = new JSDOM();
@@ -46,7 +47,25 @@ const main = async () => {
             userId: username,
         });
         const currentUser = await chatManager.connect();
-        console.log(currentUser);
+
+        const joinableRooms = await currentUser.getJoinableRooms();
+        const availableRooms = [...currentUser.rooms, ...joinableRooms];
+        availableRooms.forEach((room, index ) => {
+            console.log(`${index} - ${room.name}`);
+        });
+
+        const roomSchema = [
+            {
+                description: 'Select a room',
+                name: 'chosenRoom',
+                required: true
+            }
+        ];
+
+        const { chosenRoom } = await get(roomSchema);
+        const room = availableRooms[chosenRoom];
+
+
     }
     catch(err) {
         console.error(err);
