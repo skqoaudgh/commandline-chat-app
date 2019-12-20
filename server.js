@@ -37,7 +37,7 @@ app.post('/users', (req, res) => {
 
 app.post('/authenticate', (req, res) => {
     const authData = chatkit.authenticate({userId: req.query.user_id});
-    res.status(authData.status).send(authData.body);
+    res.status(authData.status).set(authData.headers).send(authData.body);
 })
 
 app.listen(3001, err => {
