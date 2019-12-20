@@ -45,6 +45,6 @@ app.listen(3001, err => {
         console.log(err)
     } 
     else {
-        console.log(`Running on port ${port}`);
+        console.log(`Running on port 3001`);
     }
 });
